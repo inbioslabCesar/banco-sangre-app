@@ -7,6 +7,8 @@ header("Access-Control-Allow-Headers: Content-Type");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
 header("Content-Type: application/json; charset=UTF-8");
 
+$config = require __DIR__ . '/config.php';
+
 // Preflight para CORS
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(204);
@@ -52,10 +54,10 @@ function registrar_error($mensaje) {
 }
 
 // Configuración de la base de datos
-$host = "localhost";
-$db   = "u330560936_banco_sangre";
-$user = "u330560936_banco";
-$pass = "41950361Cesar";
+$host = $config['host'];
+$db   = $config['db'];
+$user = $config['user'];
+$pass = $config['pass'];
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8", $user, $pass);
