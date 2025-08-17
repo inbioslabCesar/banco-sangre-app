@@ -65,30 +65,11 @@ export async function obtenerEntrevistaPorCliente(cliente_id) {
 // Función para obtener datos de Levey-Jennings
 
 
-export async function obtenerDatosLJ(folder, prueba, control) {
+export async function obtenerDatosLJ(folder, prueba, control, fromDate, toDate) {
   const res = await fetch(`${BASE_URL}api_levey_jennings.php`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ folder, prueba, control }),
-  });
-  return await res.json();
-}
-
-
-export async function obtenerLineasArchivo(filePath) {
-  const res = await fetch(`${BASE_URL}api_levey_jennings.php`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ file: filePath }),
-  });
-  return await res.json();
-}
-
-export async function obtenerArchivosLeveyJennings(folder) {
-  const res = await fetch(`${BASE_URL}api_levey_jennings.php`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ folder }),
+    body: JSON.stringify({ folder, prueba, control, fromDate, toDate }),
   });
   return await res.json();
 }

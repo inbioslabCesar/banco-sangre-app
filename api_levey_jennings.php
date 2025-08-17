@@ -10,6 +10,8 @@ $data = json_decode(file_get_contents('php://input'), true);
 $dir = isset($data['folder']) ? $data['folder'] : (__DIR__ . '/uploads');
 $prueba_seleccionada = isset($data['prueba']) ? $data['prueba'] : '';
 $control_seleccionado = isset($data['control']) ? $data['control'] : '';
+$fromDate = isset($data['fromDate']) ? $data['fromDate'] : '';
+$toDate = isset($data['toDate']) ? $data['toDate'] : '';
 
 function extraer_nombre_base($nombre_prueba) {
     return preg_replace('/[-_]\d.*/', '', $nombre_prueba);
@@ -25,6 +27,12 @@ foreach ($files as $file) {
     $cols = explode("\t", $lines[0]);
     $fechaCompleta = isset($cols[1]) ? trim($cols[1]) : '';
     $soloFecha = explode(',', $fechaCompleta)[0];
+
+    // Filtro por fecha (si se especifica)
+    $timestamp = strtotime($soloFecha);
+    if ($fromDate && $timestamp < strtotime($fromDate)) continue;
+    if ($toDate && $timestamp > strtotime($toDate)) continue;
+
     $pruebas_map[$nombre_base][] = [
         'file' => basename($file),
         'fecha' => $soloFecha,
