@@ -4,12 +4,12 @@ import Footer from "./components/Footer";
 import NavBar from "./components/NavBar";
 import ClienteForm from "./components/ClienteForm";
 import ClienteList from "./components/ClienteList";
-import EntrevistaForm from "./components/EntrevistaForm"; // importa tu formulario de entrevista
+import EntrevistaForm from "./components/EntrevistaForm";
 import { useState } from "react";
+import LeveyJenningsPage from "./pages/LeveyJenningsPage"; // <--- Nuevo import
 
 function App() {
   const [actualizar, setActualizar] = useState(false);
-
   const handleClienteCreado = () => setActualizar(!actualizar);
 
   return (
@@ -29,6 +29,7 @@ function App() {
               }
             />
             <Route path="/entrevista/:id" element={<EntrevistaForm />} />
+            <Route path="/levey-jennings" element={<LeveyJenningsPage />} /> {/* <-- Nueva ruta */}
           </Routes>
         </main>
         <Footer />

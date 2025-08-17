@@ -36,3 +36,59 @@ export async function actualizarCliente(id, nombre, apellido) {
   });
   return await res.json();
 }
+
+// Función para insertar entrevista
+export async function insertarEntrevista(datosEntrevista) {
+  const res = await fetch(`${BASE_URL}api_entrevistas.php`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(datosEntrevista),
+  });
+  return await res.json();
+}
+
+// Función para actualizar entrevista
+export async function actualizarEntrevista(id, datosEntrevista) {
+  const res = await fetch(`${BASE_URL}api_entrevistas.php`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ id, ...datosEntrevista, _method: "PUT" }),
+  });
+  return await res.json();
+}
+
+export async function obtenerEntrevistaPorCliente(cliente_id) {
+  const res = await fetch(`${BASE_URL}api_entrevistas.php?cliente_id=${cliente_id}`);
+  return await res.json();
+}
+
+// Función para obtener datos de Levey-Jennings
+
+
+export async function obtenerDatosLJ(folder, prueba, control) {
+  const res = await fetch(`${BASE_URL}api_levey_jennings.php`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ folder, prueba, control }),
+  });
+  return await res.json();
+}
+
+
+export async function obtenerLineasArchivo(filePath) {
+  const res = await fetch(`${BASE_URL}api_levey_jennings.php`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ file: filePath }),
+  });
+  return await res.json();
+}
+
+export async function obtenerArchivosLeveyJennings(folder) {
+  const res = await fetch(`${BASE_URL}api_levey_jennings.php`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ folder }),
+  });
+  return await res.json();
+}

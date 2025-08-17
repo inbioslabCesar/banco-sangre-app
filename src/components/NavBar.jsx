@@ -6,6 +6,7 @@ function NavBar() {
       <Link to="/" className="text-red-700 font-semibold hover:underline">Inicio</Link>
       <Link to="/" className="text-red-700 font-semibold hover:underline">Clientes</Link>
       <Link to="/donaciones" className="text-red-700 font-semibold hover:underline">Donaciones</Link>
+      <Link to="/levey-jennings" className="text-red-700 font-semibold hover:underline">Levey Jennings QC</Link>
       {/* Agrega más rutas según tu app */}
     </nav>
   );

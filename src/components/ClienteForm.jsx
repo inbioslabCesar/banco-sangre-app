@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { insertarCliente } from "../bd/Data";
 import Spinner from "./Spinner"; // Ajusta la ruta si es necesario
+import Swal from "sweetalert2";
 
 function ClienteForm({ onClienteCreado }) {
   const [nombre, setNombre] = useState("");
@@ -10,32 +11,49 @@ function ClienteForm({ onClienteCreado }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMensaje("");
     setCargando(true);
     try {
       const data = await insertarCliente(nombre, apellido);
-      setMensaje(data.message);
       if (data.success) {
+        Swal.fire({
+          icon: "success",
+          title: "Cliente guardado correctamente",
+          showConfirmButton: false,
+          timer: 1800,
+        });
         setNombre("");
         setApellido("");
         onClienteCreado();
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: data.message || "Intenta de nuevo",
+        });
       }
     } catch {
-      setMensaje("Ocurrió un error al guardar el cliente.");
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Ocurrió un error al guardar el cliente.",
+      });
     } finally {
       setCargando(false);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-md mx-auto p-4 bg-white rounded shadow mb-4">
+    <form
+      onSubmit={handleSubmit}
+      className="max-w-md mx-auto p-4 bg-white rounded shadow mb-4"
+    >
       <h2 className="text-xl font-bold mb-4">Registrar Cliente</h2>
       <input
         className="block w-full mb-2 p-2 border rounded"
         type="text"
         placeholder="Nombre"
         value={nombre}
-        onChange={e => setNombre(e.target.value)}
+        onChange={(e) => setNombre(e.target.value)}
         required
       />
       <input
@@ -43,7 +61,7 @@ function ClienteForm({ onClienteCreado }) {
         type="text"
         placeholder="Apellido"
         value={apellido}
-        onChange={e => setApellido(e.target.value)}
+        onChange={(e) => setApellido(e.target.value)}
         required
       />
       <button
