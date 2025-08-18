@@ -7,7 +7,7 @@ function LeveyJenningsSelector({ pruebas, controles, prueba, control, onPrueba, 
       <select value={prueba} onChange={e => onPrueba(e.target.value)}>
         <option value="">-- Selecciona --</option>
         {pruebas.map((p, i) => <option key={i} value={p}>{p}</option>)}
-      </select>
+            </select>
       <label style={{ margin: "0 8px 0 24px" }}>Control:</label>
       <select value={control} onChange={e => onControl(e.target.value)}>
         <option value="">-- Selecciona --</option>
@@ -16,4 +16,6 @@ function LeveyJenningsSelector({ pruebas, controles, prueba, control, onPrueba, 
     </div>
   );
 }
+
 export default LeveyJenningsSelector;
+

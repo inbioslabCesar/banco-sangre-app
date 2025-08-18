@@ -19,6 +19,8 @@ function extraer_nombre_base($nombre_prueba) {
 
 $files = glob($dir . '/*.txt');
 $pruebas_map = [];
+$archivos_filtrados = 0;
+$datos_filtrados = 0;
 
 foreach ($files as $file) {
     $lines = file($file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
@@ -28,7 +30,6 @@ foreach ($files as $file) {
     $fechaCompleta = isset($cols[1]) ? trim($cols[1]) : '';
     $soloFecha = explode(',', $fechaCompleta)[0];
 
-    // Filtro por fecha (si se especifica)
     $timestamp = strtotime($soloFecha);
     if ($fromDate && $timestamp < strtotime($fromDate)) continue;
     if ($toDate && $timestamp > strtotime($toDate)) continue;
@@ -38,6 +39,7 @@ foreach ($files as $file) {
         'fecha' => $soloFecha,
         'nombre_original' => $test_name
     ];
+    $archivos_filtrados++;
 }
 
 $pruebas = array_keys($pruebas_map);
@@ -72,6 +74,7 @@ if ($prueba_seleccionada && isset($pruebas_map[$prueba_seleccionada]) && is_arra
                         if (count($valores) === 2 && is_numeric($valores[1])) {
                             $index = $valores[1];
                             $indices_por_fecha[$fecha] = round($index, 3);
+                            $datos_filtrados++;
                             break 2;
                         }
                     }
@@ -97,5 +100,7 @@ echo json_encode([
     'pruebas' => $pruebas,
     'controles' => array_keys($controles_disponibles),
     'indices' => $indices_por_fecha,
-    'ds' => $ds
+    'ds' => $ds,
+    'archivosFiltrados' => $archivos_filtrados,
+    'datosFiltrados' => $datos_filtrados
 ]);

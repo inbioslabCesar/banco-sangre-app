@@ -32,8 +32,10 @@ return [
     'db'   => 'banco-sangre',
     'user' => 'root',
     'pass' => ''
-];
+]
 
+
+borrar en cascada
 ALTER TABLE entrevistas
 DROP FOREIGN KEY entrevistas_ibfk_1,
 ADD CONSTRAINT entrevistas_cliente_id_foreign
